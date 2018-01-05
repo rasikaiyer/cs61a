@@ -1,0 +1,28 @@
+(define (find s predicate)
+  (cond ((null? s) #f)
+  		((predicate (car s)) (car s))
+  		((pair? s) (if (predicate (car s)) (car s) (find (cdr-stream s) predicate)))
+  		(else (if (predicate s) s #f))
+  	)
+)
+
+(define (scale-stream s k)
+  (cond ((null? s) (nil))
+  		(else (cons-stream (* k (car s)) (scale-stream (cdr-stream s) k)))
+  	)
+)
+
+(define (has-cycle s)
+  (define (has-cycle-helper s partial)
+  	(cond ((null? partial) #f)
+  		  ((eq? s partial) #t)
+  		  ((pair? partial) (has-cycle-helper s (cdr-stream partial)))
+  		  (else #f)
+  		)
+  	)
+  (has-cycle-helper s (cdr-stream s))
+)
+
+(define (has-cycle-constant s)
+  'YOUR-CODE-HERE
+)
